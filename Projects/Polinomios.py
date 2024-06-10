@@ -1,11 +1,14 @@
 class Racional():
 
-    def __init__(self, numerador, denominador):
+    def __init__(self, numerador: int, denominador):
         self.numerador = numerador
         self.denominador = denominador
 
     def __str__(self):
         return f'{self.numerador} / {self.denominador}'
+    
+    def __eq__(self, value: object) -> bool:
+        return self.numer
     
     def gcd(a,b):
         while b != 0:
@@ -21,8 +24,6 @@ class Racional():
         if self.denominador < 0:
             self.numerador = -1 * self.numerador
             self.denominador = -1 * self.denominador
-        
-
 
     def sumar(self, otro):
         if isinstance(otro, Racional):
