@@ -1,47 +1,48 @@
-class Racional():
+class Monomio():
+    def __init__(self, base: float = 1, grado: float = 0):
+        self.coef = base
+        self.grado = grado
+        self.variable = 'x'
 
-    def __init__(self, numerador: int = 0, denominador:int = 1):
-        self.numerador = numerador
-        self.denominador = denominador
-
-
-    def __str__(self):
-        return f'{self.numerador} / {self.denominador}'
+    def __repr__(self):
+        return f'Monomio({self.coef},{self.grado})'
     
-    def __eq__(self, otro: 'Racional') -> bool:
-        return self.numerador == otro.numerador and self.denominador == self.denominador
+    def __add__(self, otro: 'Monomio'):
+        if self.grado == otro.grado:
+            return Monomio(self.coef + otro.coef, self.grado)
+        else:
+            return None
     
-    def gcd(a,b):
-        while b != 0:
-            aux = b
-            b = a % b
-            a = aux
-        return abs(a)
-
-    def simplificar(self):
-        gcd = gcd(self.numerador, self.denominador)
-        self.numerador = self.numerador // gcd
-        self.denominador = self.denominador // gcd
-        if self.denominador < 0:
-            self.numerador = -self.numerador
-            self.denominador = -self.denominador
-
-    def sumar(self, otro):
-        if isinstance(otro, Racional):
-            num = self.numerador*otro.denominador + otro.numerador*self.numerador
-            den = self.denominador*self.numerador
-            return Racional(num,den).simplificar()
-
-    def restar(self,otro):
-        if isinstance(otro, Racional):
-            num = self.numerador*otro.denominador - otro.numerador*self.numerador
-            den = self.denominador*self.numerador
-            return Racional(num,den).simplificar()
-            
-    def producto(self, otro):
-        if isinstance(otro, Racional):
-            return Racional(self.numerador*otro.numerador, self.denominador*otro.denominador).simplificar()
+    def __neg__(self):
+        return Monomio(-self.coef, self.grado)
+    
+    def __sub__(self, otro: 'Monomio'):
+        if self.grado == otro.grado:
+            return Monomio(self.coef - otro.coef, self.grado)
+        else:
+            return None
         
-    def division(self, otro):
-        if isinstance(otro, Racional):
-            return Racional(self.numerador*otro.denominador, self.denominador*otro.denominador).simplificar()
+    def __mul__(self, c: float):
+        return Monomio(self.coef * c, self.grado)
+    
+    __rmul__ = __mul__
+    
+    def __matmul__(self, otro: 'Monomio'):
+        return Monomio(self.coef * otro.coef, self.grado + otro.grado)
+    
+class Polinomio():
+
+    def __init__(self, *args):
+        self.monomios = []
+        self.grado_abs = 0
+        for mon in args:
+            self.monomios.append(mon)
+            if mon.grado > self.grado_abs:
+                self.grado_abs = mon.grado
+
+    def __repr__(self):
+        return str(self.monomios)
+
+x = Polinomio(Monomio(1,2), Monomio(2,3), Monomio(6,5), Monomio(2,7))
+print(x)
+print(x.grado_abs)
