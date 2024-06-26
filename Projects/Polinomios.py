@@ -1,14 +1,15 @@
 class Racional():
 
-    def __init__(self, numerador: int, denominador):
+    def __init__(self, numerador: int = 0, denominador:int = 1):
         self.numerador = numerador
         self.denominador = denominador
+
 
     def __str__(self):
         return f'{self.numerador} / {self.denominador}'
     
-    def __eq__(self, value: object) -> bool:
-        return self.numer
+    def __eq__(self, otro: 'Racional') -> bool:
+        return self.numerador == otro.numerador and self.denominador == self.denominador
     
     def gcd(a,b):
         while b != 0:
@@ -22,8 +23,8 @@ class Racional():
         self.numerador = self.numerador // gcd
         self.denominador = self.denominador // gcd
         if self.denominador < 0:
-            self.numerador = -1 * self.numerador
-            self.denominador = -1 * self.denominador
+            self.numerador = -self.numerador
+            self.denominador = -self.denominador
 
     def sumar(self, otro):
         if isinstance(otro, Racional):
