@@ -40,7 +40,7 @@ class Matrix():
 
     def __matmul__ (self, otro: 'Matrix') -> 'Matrix':
         if self.n == otro.m:
-            new = np.zeros([self.m, otro.n])
+            new = [[0] * self.m for n in range(otro.n)]
             i, j, k = 0,0,0
             for i in range(self.m):
                 for j in range(otro.n):
