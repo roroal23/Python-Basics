@@ -55,6 +55,10 @@ class Polinomio():
     def __getitem__(self, i : int):
         return self.monomios[i]
     
+    def __neg__(self):
+        for i in range(len(self.monomios)):
+            self.monomios[i] *= -1
+
     def sumaMonomio(self, mon :'Monomio'):
         if mon.grado in self.grados:
             pos = self.grados[mon.grado]
@@ -66,6 +70,10 @@ class Polinomio():
         for mon in pol.monomios:
             self.sumaMonomio(mon)
 
+    def multEscalar(self, c : float):
+        for i in range(len(self.monomios)):
+            self.monomios[i] *= c
+
 x = Polinomio(Monomio(1,2), Monomio(2,3), Monomio(6,5), Monomio(2,7))
 y = Polinomio(Monomio(3,2), Monomio(6,3), Monomio(8,5), Monomio(-2,7))
 mon = Monomio(3,2)
@@ -74,5 +82,6 @@ mon = Monomio(3,2)
 #x.sumaMonomio(mon)
 #print(x)
 #print(x.grado_abs)
-x.sumaPolinomio(y)
+#x.sumaPolinomio(y)
+x.multEscalar(3)
 print(x)
