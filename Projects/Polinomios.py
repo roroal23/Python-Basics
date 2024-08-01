@@ -32,17 +32,47 @@ class Monomio():
     
 class Polinomio():
 
+    
     def __init__(self, *args):
         self.monomios = []
         self.grado_abs = 0
+        self.grados = {}
         for mon in args:
-            self.monomios.append(mon)
-            if mon.grado > self.grado_abs:
+            self.agregar(mon)
+
+    def agregar(self, mon: 'Monomio'):
+        self.monomios.append(mon)
+        self.grados[mon.grado] = len(self.monomios) - 1 #grado : posicion
+        if mon.grado > self.grado_abs:
                 self.grado_abs = mon.grado
 
     def __repr__(self):
         return str(self.monomios)
+    
+    def __len__(self): #Devuelve el numero de monomios
+        return len(self.monomios)
+    
+    def __getitem__(self, i : int):
+        return self.monomios[i]
+    
+    def sumaMonomio(self, mon :'Monomio'):
+        if mon.grado in self.grados:
+            pos = self.grados[mon.grado]
+            self.monomios[pos] = self.monomios[pos] + mon
+        else:
+            self.agregar(mon)
+
+    def sumaPolinomio(self, pol: 'Polinomio'):
+        for mon in pol.monomios:
+            self.sumaMonomio(mon)
 
 x = Polinomio(Monomio(1,2), Monomio(2,3), Monomio(6,5), Monomio(2,7))
+y = Polinomio(Monomio(3,2), Monomio(6,3), Monomio(8,5), Monomio(-2,7))
+mon = Monomio(3,2)
+#print(x)
+#print(x.grado_abs)
+#x.sumaMonomio(mon)
+#print(x)
+#print(x.grado_abs)
+x.sumaPolinomio(y)
 print(x)
-print(x.grado_abs)
